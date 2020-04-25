@@ -19,8 +19,9 @@ public class AccountTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		customer = new Customer();
+		customer = new Customer("Antony", "ID 987 8785 9887");
 		account = new Account(customer, 1000.0d);
+		customer.getAccounts().add(account);
 		accountTransactions = new AccountTransactionsImpl();
 		transactionRule = new TransactionRuleImpl();
 	}
@@ -63,7 +64,7 @@ public class AccountTest {
 		
 		/*
 		assertThatThrownBy(() -> accountTransactions.withdrawMoneyFromCustomer(account, amount, transactionRule))
-		.isInstanceOf(IllegalAmoutException.class).hasMessageContaining("Illegal amount:");
+		.isInstanceOf(IllegalBalanceException.class).hasMessageContaining("Illegal balance:");
 		*/
 
 		try {
@@ -81,6 +82,18 @@ public class AccountTest {
 		} catch (IllegalBalanceException e) {
 			assertTrue(false);
 		}
+	}
+	/**
+	 * display customer with account balance
+	 */
+	@Test
+	void testDisplaydisplayAccountBalance() { 
+		
+		assertTrue(customer != null  
+				&& customer.getAccounts().size() != 0
+				&& customer.getAccounts().get(0).getBalance() == 1000.0d);
+		
+		
 	}
 
 }
