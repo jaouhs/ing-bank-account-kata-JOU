@@ -54,5 +54,33 @@ public class AccountTest {
 
 	}
 	
-	
+	/**
+	 * Initial balance value is 1000.0 euro
+	 */
+	@Test
+	void testWithdrawMoneyFromCustomer() { 
+		amount = 2000.0d;
+		
+		/*
+		assertThatThrownBy(() -> accountTransactions.withdrawMoneyFromCustomer(account, amount, transactionRule))
+		.isInstanceOf(IllegalAmoutException.class).hasMessageContaining("Illegal amount:");
+		*/
+
+		try {
+			
+			accountTransactions.withdrawMoneyFromCustomer(account, amount, transactionRule);
+			assertTrue(false);
+		} catch (IllegalBalanceException e) {
+			assertTrue(true);
+		}
+
+		amount = 500.0d;
+		try {
+			accountTransactions.withdrawMoneyFromCustomer(account, amount, transactionRule);
+			assertTrue(true);
+		} catch (IllegalBalanceException e) {
+			assertTrue(false);
+		}
+	}
+
 }

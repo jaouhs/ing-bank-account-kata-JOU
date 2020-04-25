@@ -12,4 +12,9 @@ public class TransactionRuleImpl implements TransactionRule {
 		return amount > MIN_AMOUNT_ALLOWED;
 	}
 
+	@Override
+	public boolean withdrawAllowed(Double amount) {
+		return amount > AMOUNT_ZERO;
+	}
+
 }

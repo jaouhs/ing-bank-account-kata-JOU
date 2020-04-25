@@ -20,5 +20,20 @@ public class AccountTransactionsImpl implements AccountTransactions {
 		account.addAmount(amount);
 	}
 
-	
+	@Override
+	public void withdrawMoneyFromCustomer(Account account, Double amount, TransactionRule transactionRule)
+			throws IllegalBalanceException {
+		
+		if(account == null || transactionRule == null) {
+			throw new NullPointerException("Account or trasactionRule undefined");
+		}
+		
+		Double newBalance = account.getBalance() - amount;
+		
+		if(!transactionRule.withdrawAllowed(newBalance)) {
+			throw new IllegalBalanceException(newBalance);
+		}
+		account.setBalance(newBalance);
+	}
+
 }

@@ -6,7 +6,7 @@ public class IllegalAmoutException extends Exception {
 	 */
 	private static final long serialVersionUID = 3412917120277134411L;
 
-	private Double amount;
+	protected Double amount;
     
     public IllegalAmoutException(Double illegalAmount) {
     	amount = illegalAmount;
