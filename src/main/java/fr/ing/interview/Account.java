@@ -3,21 +3,20 @@ package fr.ing.interview;
 public class Account {
 	private Double balance = 0.0d;
 	private Customer customer;
+	private String identifier;
 
-	public Account(Customer customer) {
+	public Account(Customer customer, String identifier) {
 		super();
 		this.customer = customer;
+		this.identifier = identifier;
 	}
 	
-	
-
-	public Account(Customer customer, Double balance) {
+	public Account(Customer customer, String identifier, Double balance) {
 		super();
 		this.balance = balance;
+		this.identifier = identifier;
 		this.customer = customer;
 	}
-
-
 
 	public Double getBalance() {
 		return balance;
@@ -33,6 +32,15 @@ public class Account {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+	
+	
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
 	}
 
 	/**
