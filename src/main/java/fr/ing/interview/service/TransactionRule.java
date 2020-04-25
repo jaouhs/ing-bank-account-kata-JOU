@@ -1,4 +1,4 @@
-package fr.ing.interview;
+package fr.ing.interview.service;
 
 public interface TransactionRule {
 	

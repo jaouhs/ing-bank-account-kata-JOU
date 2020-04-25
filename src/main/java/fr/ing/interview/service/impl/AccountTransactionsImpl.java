@@ -1,15 +1,15 @@
-package fr.ing.interview.impl;
+package fr.ing.interview.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import fr.ing.interview.Account;
-import fr.ing.interview.AccountTransactions;
-import fr.ing.interview.IllegalAmoutException;
-import fr.ing.interview.IllegalBalanceException;
-import fr.ing.interview.Transaction;
-import fr.ing.interview.TransactionRule;
+import fr.ing.interview.exceptions.IllegalAmoutException;
+import fr.ing.interview.exceptions.IllegalBalanceException;
+import fr.ing.interview.model.Account;
+import fr.ing.interview.model.Transaction;
+import fr.ing.interview.service.AccountTransactions;
+import fr.ing.interview.service.TransactionRule;
 
 public class AccountTransactionsImpl implements AccountTransactions {
 	

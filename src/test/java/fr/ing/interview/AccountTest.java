@@ -6,8 +6,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import fr.ing.interview.impl.AccountTransactionsImpl;
-import fr.ing.interview.impl.TransactionRuleImpl;
+import fr.ing.interview.exceptions.IllegalAmoutException;
+import fr.ing.interview.exceptions.IllegalBalanceException;
+import fr.ing.interview.model.Account;
+import fr.ing.interview.model.Customer;
+import fr.ing.interview.service.AccountTransactions;
+import fr.ing.interview.service.TransactionRule;
+import fr.ing.interview.service.impl.AccountTransactionsImpl;
+import fr.ing.interview.service.impl.TransactionRuleImpl;
 
 public class AccountTest {
 	

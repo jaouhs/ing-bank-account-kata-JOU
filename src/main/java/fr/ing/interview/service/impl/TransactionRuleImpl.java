@@ -1,6 +1,6 @@
-package fr.ing.interview.impl;
+package fr.ing.interview.service.impl;
 
-import fr.ing.interview.TransactionRule;
+import fr.ing.interview.service.TransactionRule;
 
 public class TransactionRuleImpl implements TransactionRule {
 	

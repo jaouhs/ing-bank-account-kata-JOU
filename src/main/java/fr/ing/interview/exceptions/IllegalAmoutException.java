@@ -1,4 +1,4 @@
-package fr.ing.interview;
+package fr.ing.interview.exceptions;
 
 public class IllegalAmoutException extends Exception {
 	/**

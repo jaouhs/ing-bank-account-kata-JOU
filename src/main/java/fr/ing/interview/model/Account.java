@@ -1,4 +1,4 @@
-package fr.ing.interview;
+package fr.ing.interview.model;
 
 public class Account {
 	private Double balance = 0.0d;

@@ -1,4 +1,4 @@
-package fr.ing.interview;
+package fr.ing.interview.model;
 
 import java.util.Date;
 
