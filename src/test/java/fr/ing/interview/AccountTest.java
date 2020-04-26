@@ -1,7 +1,8 @@
 package fr.ing.interview;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,8 +26,8 @@ public class AccountTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		customer = new Customer("Antony", "ID 987 8785 9887");
-		account = new Account(customer, "ACC ID 125", 1000.0d);
+		customer = new Customer(null, "Antony", "ID 987 8785 9887", new ArrayList<Account>());
+		account = new Account(null, 1000.0d, customer, "ACC ID 125");
 		customer.getAccounts().add(account);
 		accountTransactions = new AccountTransactionsImpl();
 		transactionRule = new TransactionRuleImpl();

@@ -29,7 +29,7 @@ public class AccountTransactionsImpl implements AccountTransactions {
 			throw new IllegalAmoutException(amount);
 		}
 		account.addAmount(amount);
-		transcations.add(new Transaction(account, new Date(), amount));
+		transcations.add(new Transaction(null, account, new Date(), amount));
 	}
 
 	@Override
@@ -46,7 +46,8 @@ public class AccountTransactionsImpl implements AccountTransactions {
 			throw new IllegalBalanceException(newBalance);
 		}
 		account.setBalance(newBalance);
-		transcations.add(new Transaction(account, new Date(), -amount));
+		transcations.add(new Transaction(null, account, new Date(), -amount));
+		//"Id"+(int)9999 * Math.random()
 	}
 	
 

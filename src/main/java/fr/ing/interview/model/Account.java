@@ -1,47 +1,23 @@
 package fr.ing.interview.model;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Document
+@Data @AllArgsConstructor @NoArgsConstructor @ToString
 public class Account {
+	private String id;
 	private Double balance = 0.0d;
+	
+	@DBRef
 	private Customer customer;
-	private String identifier;
-
-	public Account(Customer customer, String identifier) {
-		super();
-		this.customer = customer;
-		this.identifier = identifier;
-	}
 	
-	public Account(Customer customer, String identifier, Double balance) {
-		super();
-		this.balance = balance;
-		this.identifier = identifier;
-		this.customer = customer;
-	}
-
-	public Double getBalance() {
-		return balance;
-	}
-
-	public void setBalance(Double balance) {
-		this.balance = balance;
-	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-	
-	
-	public String getIdentifier() {
-		return identifier;
-	}
-
-	public void setIdentifier(String identifier) {
-		this.identifier = identifier;
-	}
+	private String accountId;
 
 	/**
 	 * Add amount to balance
@@ -49,7 +25,5 @@ public class Account {
 	 */
 	public void addAmount(Double amount) {
 		this.balance += amount;
-		
 	}
-
 }
