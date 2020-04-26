@@ -6,44 +6,72 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import fr.ing.interview.dao.AccountRepository;
+import fr.ing.interview.dao.CustomerRepository;
+import fr.ing.interview.dao.TransactionRepository;
 import fr.ing.interview.exceptions.IllegalAmoutException;
 import fr.ing.interview.exceptions.IllegalBalanceException;
 import fr.ing.interview.model.Account;
 import fr.ing.interview.model.Customer;
 import fr.ing.interview.service.AccountTransactions;
 import fr.ing.interview.service.TransactionRule;
-import fr.ing.interview.service.impl.AccountTransactionsImpl;
-import fr.ing.interview.service.impl.TransactionRuleImpl;
 
-public class AccountTest {
-	
+@RunWith(SpringRunner.class)
+@SpringBootTest
+//@DataMongoTest
+class AccountTest {
+
+	@Autowired(required = true)
+	AccountTransactions accountTransactions;
+	@Autowired(required = true)
+	TransactionRule transactionRule;
+	@Autowired
+	AccountRepository accountRepository;
+	@Autowired
+	CustomerRepository customerRepository;
+
+	@Autowired
+	TransactionRepository transactionRepository;
+
 	Customer customer;
 	Account account;
-	AccountTransactions accountTransactions;
-	TransactionRule transactionRule;
+
 	Double amount = 0.0d;
 
 	@BeforeEach
 	void setUp() throws Exception {
-		customer = new Customer(null, "Antony", "ID 987 8785 9887", new ArrayList<Account>());
-		account = new Account(null, 1000.0d, customer, "ACC ID 125");
+		customer = new Customer("cus Id", "Antony", "ID 987 8785 9887", new ArrayList<Account>());
+		customerRepository.save(customer);
+		account = new Account("acc Id", 1000.0d, customer, "ACC ID 125");
 		customer.getAccounts().add(account);
-		accountTransactions = new AccountTransactionsImpl();
-		transactionRule = new TransactionRuleImpl();
+
+		/*
+		 * accountRepository.save(account).subscribe(acc -> { account = acc; });
+		 * 
+		 * customerRepository.save(customer).subscribe(cus -> { customer = cus; });;
+		 */
+		// accountTransactions = new AccountTransactionsImpl();
+		// transactionRule = new TransactionRuleImpl();
 	}
 
 	/**
-	 * Test with amount less and other greater than 0.01 euro  
+	 * Test with amount less and other greater than 0.01 euro
 	 */
 	@Test
 	void testdDepositMoneyFromCustomer() {
 		amount = 0.0d;
 
 		/*
-		assertThatThrownBy(() -> accountTransactions.depositMoneyAccount(account, amount, transactionRule))
-		.isInstanceOf(IllegalAmoutException.class).hasMessageContaining("Illegal amount:");
-		*/
+		 * assertThatThrownBy(() -> accountTransactions.depositMoneyAccount(account,
+		 * amount, transactionRule)) .isInstanceOf(IllegalAmoutException.class).
+		 * hasMessageContaining("Illegal amount:");
+		 */
 
 		try {
 			accountTransactions.depositMoneyAccount(account, amount, transactionRule);
@@ -61,20 +89,22 @@ public class AccountTest {
 		}
 
 	}
-	
+
 	/**
 	 * Initial balance value is 1000.0 euro
 	 */
 	@Test
-	void testWithdrawMoneyFromCustomer() { 
+	void testWithdrawMoneyFromCustomer() {
 		amount = 2000.0d;
-		
+
 		/*
-		assertThatThrownBy(() -> accountTransactions.withdrawMoneyFromCustomer(account, amount, transactionRule))
-		.isInstanceOf(IllegalBalanceException.class).hasMessageContaining("Illegal balance:");
-		*/
+		 * assertThatThrownBy(() ->
+		 * accountTransactions.withdrawMoneyFromCustomer(account, amount,
+		 * transactionRule)) .isInstanceOf(IllegalBalanceException.class).
+		 * hasMessageContaining("Illegal balance:");
+		 */
 		try {
-			
+
 			accountTransactions.withdrawMoneyFromCustomer(account, amount, transactionRule);
 			assertTrue(false);
 		} catch (IllegalBalanceException e) {
@@ -89,38 +119,60 @@ public class AccountTest {
 			assertTrue(false);
 		}
 	}
+
 	/**
 	 * Display customer with account balance
 	 */
 	@Test
-	void testDisplaydisplayAccountBalance() { 
-		
-		assertTrue(customer != null  
-				&& customer.getAccounts().size() != 0
+	void testDisplaydisplayAccountBalance() {
+
+		assertTrue(customer != null && customer.getAccounts().size() != 0
 				&& customer.getAccounts().get(0).getBalance() == 1000.0d);
-		
+
 	}
-	
+
 	/**
 	 * Account transactions history
 	 */
-	
+
 	@Test
-	void testDisplayHistory() throws IllegalBalanceException, IllegalAmoutException{
+	void testDisplayHistory() throws IllegalBalanceException, IllegalAmoutException {
+
 		amount = 100.0d;
-		accountTransactions.depositMoneyAccount(account, amount, transactionRule);
+		accountTransactions.depositMoneyAccount(account, amount, transactionRule).subscribe(null, t -> {
+			assertTrue(t != null);
+		});
 		amount = 900.0d;
-		accountTransactions.depositMoneyAccount(account, amount, transactionRule);
+		accountTransactions.depositMoneyAccount(account, amount, transactionRule).subscribe(null, t -> {
+			assertTrue(t != null);
+		});
+		;
 		amount = 5000.0d;
-		accountTransactions.depositMoneyAccount(account, amount, transactionRule);
+		accountTransactions.depositMoneyAccount(account, amount, transactionRule).subscribe(null, t -> {
+			assertTrue(t != null);
+		});
+		;
 
 		amount = 120.0d;
-		accountTransactions.withdrawMoneyFromCustomer(account, amount, transactionRule);
+		accountTransactions.withdrawMoneyFromCustomer(account, amount, transactionRule).subscribe(null, t -> {
+			assertTrue(t != null);
+		});
+		;
 		amount = 300.0d;
-		accountTransactions.withdrawMoneyFromCustomer(account, amount, transactionRule);
+		accountTransactions.withdrawMoneyFromCustomer(account, amount, transactionRule).subscribe(null, t -> {
+			assertTrue(t != null);
+		});
+		;
 		amount = 1100.0d;
-		accountTransactions.withdrawMoneyFromCustomer(account, amount, transactionRule);
-		
-		assertTrue(accountTransactions.getTranscations().size() == 6);
+		accountTransactions.withdrawMoneyFromCustomer(account, amount, transactionRule).subscribe(null, t -> {
+			assertTrue(t != null);
+		});
+		;
+
+		transactionRepository.count().subscribe(count -> {
+			assertTrue(count != 0);
+
+		});
+
 	}
 }

@@ -1,7 +1,10 @@
 package fr.ing.interview.service.impl;
 
+import org.springframework.stereotype.Service;
+
 import fr.ing.interview.service.TransactionRule;
 
+@Service
 public class TransactionRuleImpl implements TransactionRule {
 	
 	final static Double MIN_AMOUNT_ALLOWED = 0.01d;

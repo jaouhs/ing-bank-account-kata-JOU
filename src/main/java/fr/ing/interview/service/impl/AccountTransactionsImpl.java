@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import fr.ing.interview.dao.TransactionRepository;
 import fr.ing.interview.exceptions.IllegalAmoutException;
@@ -13,7 +14,9 @@ import fr.ing.interview.model.Account;
 import fr.ing.interview.model.Transaction;
 import fr.ing.interview.service.AccountTransactions;
 import fr.ing.interview.service.TransactionRule;
+import reactor.core.publisher.Mono;
 
+@Service
 public class AccountTransactionsImpl implements AccountTransactions {
 	
 	@Autowired
@@ -26,7 +29,7 @@ public class AccountTransactionsImpl implements AccountTransactions {
 	}*/
 
 	@Override
-	public void depositMoneyAccount(Account account, Double amount, TransactionRule transactionRule) throws IllegalAmoutException {
+	public Mono<Transaction> depositMoneyAccount(Account account, Double amount, TransactionRule transactionRule) throws IllegalAmoutException {
 		if(account == null || transactionRule == null) {
 			throw new NullPointerException("Account or trasactionRule undefined");
 		}
@@ -37,10 +40,11 @@ public class AccountTransactionsImpl implements AccountTransactions {
 		account.addAmount(amount);
 		//transcations.add(new Transaction(null, account, new Date(), amount));
 		transactionRepository.save(new Transaction(null, account, new Date(), amount) );
+		return transactionRepository.save(new Transaction(null, account, new Date(), amount) );
 	}
 
 	@Override
-	public void withdrawMoneyFromCustomer(Account account, Double amount, TransactionRule transactionRule)
+	public Mono<Transaction> withdrawMoneyFromCustomer(Account account, Double amount, TransactionRule transactionRule)
 			throws IllegalBalanceException {
 		
 		if(account == null || transactionRule == null) {
@@ -54,7 +58,7 @@ public class AccountTransactionsImpl implements AccountTransactions {
 		}
 		account.setBalance(newBalance);
 		//transcations.add(new Transaction(null, account, new Date(), -amount));
-		transactionRepository.save(new Transaction(null, account, new Date(), amount));
+		return transactionRepository.save(new Transaction(null, account, new Date(), amount));
 	}
 	
 
