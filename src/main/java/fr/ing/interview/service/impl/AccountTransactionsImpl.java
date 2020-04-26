@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import fr.ing.interview.dao.TransactionRepository;
 import fr.ing.interview.exceptions.IllegalAmoutException;
 import fr.ing.interview.exceptions.IllegalBalanceException;
 import fr.ing.interview.model.Account;
@@ -13,11 +16,14 @@ import fr.ing.interview.service.TransactionRule;
 
 public class AccountTransactionsImpl implements AccountTransactions {
 	
-	List<Transaction> transcations = new ArrayList<Transaction>();
+	@Autowired
+	TransactionRepository transactionRepository;
+	
+	//List<Transaction> transcations = new ArrayList<Transaction>();
 
-	public List<Transaction> getTranscations() {
+	/*public List<Transaction> getTranscations() {
 		return transcations;
-	}
+	}*/
 
 	@Override
 	public void depositMoneyAccount(Account account, Double amount, TransactionRule transactionRule) throws IllegalAmoutException {
@@ -29,7 +35,8 @@ public class AccountTransactionsImpl implements AccountTransactions {
 			throw new IllegalAmoutException(amount);
 		}
 		account.addAmount(amount);
-		transcations.add(new Transaction(null, account, new Date(), amount));
+		//transcations.add(new Transaction(null, account, new Date(), amount));
+		transactionRepository.save(new Transaction(null, account, new Date(), amount) );
 	}
 
 	@Override
@@ -46,8 +53,8 @@ public class AccountTransactionsImpl implements AccountTransactions {
 			throw new IllegalBalanceException(newBalance);
 		}
 		account.setBalance(newBalance);
-		transcations.add(new Transaction(null, account, new Date(), -amount));
-		//"Id"+(int)9999 * Math.random()
+		//transcations.add(new Transaction(null, account, new Date(), -amount));
+		transactionRepository.save(new Transaction(null, account, new Date(), amount));
 	}
 	
 
